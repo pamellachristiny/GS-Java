@@ -8,7 +8,6 @@ import java.util.List;
 
 public class ProfessorDAO implements RepositorioProfessor {
 
-    // Simulação de banco de dados em memória
     private static final List<Professor> professores = new ArrayList<>();
 
     @Override

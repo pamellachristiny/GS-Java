@@ -1,35 +1,41 @@
 package br.com.fiap.biblioteca.dominio;
 
+import java.util.Date;
+
 public class Conversa {
 
-    private String idConversa;
-    private int idUsuario;
-    private String dataHora;
+    private String id_conversa;
+    private int id_usuario;
+    private Date dataHora;
     private String conteudo;
 
     public Conversa() {}
 
-    public Conversa(String idConversa, int idUsuario, String dataHora, String conteudo) {
-        this.idConversa = idConversa;
-        this.idUsuario = idUsuario;
+    public Conversa(String idConversa, int idUsuario, Date dataHora, String conteudo) {
+        this.id_conversa = idConversa;
+        this.id_usuario = idUsuario;
         this.dataHora = dataHora;
         this.conteudo = conteudo;
     }
 
     public String getIdConversa() {
-        return idConversa;
+        return id_conversa;
     }
 
     public String getId() { // alias opcional
-        return idConversa;
+        return id_conversa;
     }
 
     public int getIdUsuario() {
-        return idUsuario;
+        return id_usuario;
     }
 
-    public String getDataHora() {
+    public Date getDataHora() {
         return dataHora;
+    }
+
+    public void setDataHora(Date dataHora) {
+        this.dataHora = dataHora;
     }
 
     public String getConteudo() {

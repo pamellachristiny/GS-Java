@@ -9,7 +9,7 @@ public interface RepositorioConversa {
 
     Conversa buscarPorId(String idConversa);
 
-    List<Conversa> buscarPorUsuario(int idUsuario);
+    List<Conversa> buscarPorUsuario(int id_usuario);
 
     List<Conversa> listarTodas();
 

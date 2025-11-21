@@ -2,7 +2,7 @@ package br.com.fiap.biblioteca.dominio;
 
 public class Curso {
 
-    private Long idCurso;
+    private Long id_curso;
     private String nomeCurso;
     private Long idProfessor;
     private Long idChallenge;
@@ -10,8 +10,8 @@ public class Curso {
     public Curso() {
     }
 
-    public Curso(Long idCurso, String nomeCurso, Long idProfessor, Long idChallenge) {
-        this.idCurso = idCurso;
+    public Curso(Long id_curso, String nomeCurso, Long idProfessor, Long idChallenge) {
+        this.id_curso = id_curso;
         this.nomeCurso = nomeCurso;
         this.idProfessor = idProfessor;
         this.idChallenge = idChallenge;
@@ -24,11 +24,11 @@ public class Curso {
     }
 
     public Long getIdCurso() {
-        return idCurso;
+        return id_curso;
     }
 
     public void setIdCurso(Long idCurso) {
-        this.idCurso = idCurso;
+        this.id_curso = idCurso;
     }
 
     public String getNomeCurso() {

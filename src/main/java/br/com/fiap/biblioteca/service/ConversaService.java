@@ -20,8 +20,8 @@ public class ConversaService {
         return repositorioConversas.buscarPorId(id);
     }
 
-    public List<Conversa> buscarPorUsuario(int idUsuario) {
-        return repositorioConversas.buscarPorUsuario(idUsuario);
+    public List<Conversa> buscarPorUsuario(int id_usuario) {
+        return repositorioConversas.buscarPorUsuario(id_usuario);
     }
 
     public List<Conversa> listarTodas() {

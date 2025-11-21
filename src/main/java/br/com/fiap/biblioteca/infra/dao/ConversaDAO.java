@@ -26,18 +26,19 @@ public class ConversaDAO implements RepositorioConversa {
     @Override
     public void salvar(Conversa conversa) {
         String sql = "INSERT INTO TB_CONVERSA (id_conversa, id_usuario, data_hora_conversa, conteudo_conversa) " +
-                "VALUES (?, ?, TO_DATE(?, 'YYYY-MM-DD HH24:MI:SS'), ?)";
+                "VALUES (?, ?, ?, ?)";
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, conversa.getIdConversa());
             stmt.setInt(2, conversa.getIdUsuario());
-            stmt.setString(3, conversa.getDataHora());
+            stmt.setTimestamp(3, new java.sql.Timestamp(conversa.getDataHora().getTime()));
             stmt.setString(4, conversa.getConteudo());
             stmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao salvar conversa", e);
         }
     }
+
 
     @Override
     public Conversa buscarPorId(String idConversa) {
@@ -51,7 +52,7 @@ public class ConversaDAO implements RepositorioConversa {
                 return new Conversa(
                         rs.getString("id_conversa"),
                         rs.getInt("id_usuario"),
-                        rs.getString("data_hora_conversa"),
+                        rs.getDate("data_hora_conversa"),
                         rs.getString("conteudo_conversa")
                 );
             }
@@ -76,7 +77,7 @@ public class ConversaDAO implements RepositorioConversa {
                 conversas.add(new Conversa(
                         rs.getString("id_conversa"),
                         rs.getInt("id_usuario"),
-                        rs.getString("data_hora_conversa"),
+                        rs.getDate("data_hora_conversa"),
                         rs.getString("conteudo_conversa")
                 ));
             }
@@ -100,7 +101,7 @@ public class ConversaDAO implements RepositorioConversa {
                 conversas.add(new Conversa(
                         rs.getString("id_conversa"),
                         rs.getInt("id_usuario"),
-                        rs.getString("data_hora_conversa"),
+                        rs.getDate("data_hora_conversa"),
                         rs.getString("conteudo_conversa")
                 ));
             }
