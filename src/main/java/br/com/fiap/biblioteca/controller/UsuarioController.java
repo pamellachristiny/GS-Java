@@ -75,4 +75,20 @@ public class UsuarioController {
                 .build();
     }
 
+    @PUT
+    @Path("/{id}")
+    public Response atualizar(@PathParam("id") int id, Usuario usuarioAtualizado) {
+        try {
+            usuarioService.atualizar(id, usuarioAtualizado);
+            return Response.status(Response.Status.OK).build();
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(e.getMessage())
+                    .build();
+        }
+    }
+
+
 }

@@ -176,4 +176,29 @@ public class UsuarioDAO implements RepositorioUsuario {
             throw new RuntimeException("Erro ao excluir usuário", e);
         }
     }
+
+    @Override
+    public void atualizar(int id, Usuario usuario) {
+        try {
+            Connection conexao = new ConnectionFactory().getConnection();
+            String sql = "UPDATE TB_USUARIO SET nome_usuario = ?, email_usuario = ?, senha_usuario = ?, plano_usuario = ? " +
+                    "WHERE id_usuario = ?";
+
+            PreparedStatement comando = conexao.prepareStatement(sql);
+            comando.setString(1, usuario.getNome_usuario());
+            comando.setString(2, usuario.getEmail_usuario());
+            comando.setString(3, usuario.getSenha_usuario());
+            comando.setString(4, usuario.getPlano_usuario());
+            comando.setInt(5, id);
+
+            comando.executeUpdate();
+
+            comando.close();
+            conexao.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao atualizar usuário", e);
+        }
+    }
+
 }

@@ -14,4 +14,7 @@ public interface RepositorioUsuario {
     ArrayList<Usuario> listarTodos();
 
     void excluir(int id);
+
+    void atualizar(int id, Usuario usuario);
+
 }
