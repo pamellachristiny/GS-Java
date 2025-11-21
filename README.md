@@ -1,4 +1,4 @@
-# 📚 LevelUP – Plataforma de Desenvolvimento de Soft Skills (API Backend)
+#LevelUP – Plataforma de Desenvolvimento de Soft Skills (API Backend)
 
 Bem-vindo ao repositório do **GS-Java**, um sistema completo desenvolvido em Java utilizando o padrão **MVC + DAO**, arquitetura em camadas e API REST para interação com Front-End.
 
@@ -16,7 +16,9 @@ Este projeto implementa controle de cursos, usuários, desafios, níveis e conve
 * **Maven**
 * **Render (Deploy)**
 ---
-## 🌐 Link do repositorio
+
+## 🌐  Link do Repositório
+👉[Repositório no GitHub](https://github.com/pamellachristiny/GS-Java)
 
 ---
 
