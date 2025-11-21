@@ -191,12 +191,6 @@ mvn package
 
 ---
 
-# 👩‍💻 Autora
-
-**Pamella Christiny**
-
-Projeto acadêmico desenvolvido para avaliação FIAP, baseado no tema **LevelUP**, uma plataforma para desenvolvimento de soft skills com desafios inteligentes recomendados por uma Agente de IA.
-
 ### 🎮 Sobre o Tema do Projeto
 
 **LevelUP** é uma plataforma inovadora focada no desenvolvimento das **soft skills essenciais para as profissões do futuro**. A experiência do usuário é centrada em:
