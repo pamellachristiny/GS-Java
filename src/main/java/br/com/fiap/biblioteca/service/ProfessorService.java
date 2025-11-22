@@ -33,7 +33,15 @@ public class ProfessorService {
         repositorioProfessores.atualizar(professor);
     }
 
-    public void remover(int id) {
+    public boolean excluir(int id) {
+        Professor professor = repositorioProfessores.buscarPorId(id);
+
+        if (professor == null) {
+            return false;  // Não existe
+        }
+
         repositorioProfessores.excluir(id);
+        return true;       // Removido com sucesso
     }
+
 }

@@ -90,5 +90,28 @@ public class ProfessorController {
                 .entity(professorExistente)
                 .build();
     }
+
+    @DELETE
+    @Path("/{id}")
+    public Response deletar(@PathParam("id") int id) {
+        try {
+            boolean removido = professorService.excluir(id);
+
+            if (!removido) {
+                return Response.status(Response.Status.NOT_FOUND)
+                        .entity("Professor não encontrado.")
+                        .build();
+            }
+
+            return Response.noContent().build(); // 204
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            return Response
+                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(e.getMessage())
+                    .build();
+        }
+    }
+
 }
 
