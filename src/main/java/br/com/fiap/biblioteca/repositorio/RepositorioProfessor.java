@@ -13,5 +13,7 @@ public interface RepositorioProfessor {
 
     ArrayList<Professor> listarTodos();
 
+    void atualizar(Professor professor);
+
     void excluir(int id);
 }

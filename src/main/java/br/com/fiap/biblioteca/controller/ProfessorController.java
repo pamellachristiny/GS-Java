@@ -1,23 +1,27 @@
 package br.com.fiap.biblioteca.controller;
 
 import br.com.fiap.biblioteca.dominio.Professor;
+import br.com.fiap.biblioteca.infra.dao.ConnectionFactory;
 import br.com.fiap.biblioteca.infra.dao.ProfessorDAO;
 import br.com.fiap.biblioteca.repositorio.RepositorioProfessor;
 import br.com.fiap.biblioteca.service.ProfessorService;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 
 @Path("/professores")
 public class ProfessorController {
+    Connection conexao = new ConnectionFactory().getConnection();
 
     private RepositorioProfessor repositorioProfessor;
     private ProfessorService professorService;
 
     public ProfessorController() {
-        this.repositorioProfessor = new ProfessorDAO();
-        professorService = new ProfessorService(repositorioProfessor);
+        Connection conexao = new ConnectionFactory().getConnection();
+        this.repositorioProfessor = new ProfessorDAO(conexao);
+        this.professorService = new ProfessorService(repositorioProfessor);
     }
 
     @POST
@@ -60,7 +64,6 @@ public class ProfessorController {
     public Response listarTodos() {
         ArrayList<Professor> professores = repositorioProfessor.listarTodos();
         Response.Status status = professores.isEmpty() ? Response.Status.NOT_FOUND : Response.Status.OK;
-
         return Response.status(status).entity(professores).build();
     }
 
@@ -81,11 +84,11 @@ public class ProfessorController {
         professorExistente.setEmail_professor(professorAtualizado.getEmail_professor());
         professorExistente.setSenha_professor(professorAtualizado.getSenha_professor());
 
-        repositorioProfessor.salvar(professorExistente);
+        repositorioProfessor.atualizar(professorExistente);
 
         return Response.status(Response.Status.OK)
                 .entity(professorExistente)
                 .build();
     }
-
 }
+
