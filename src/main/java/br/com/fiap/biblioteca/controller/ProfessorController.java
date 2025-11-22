@@ -6,17 +6,19 @@ import br.com.fiap.biblioteca.infra.dao.ProfessorDAO;
 import br.com.fiap.biblioteca.repositorio.RepositorioProfessor;
 import br.com.fiap.biblioteca.service.ProfessorService;
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 import java.sql.Connection;
 import java.util.ArrayList;
 
 @Path("/professores")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class ProfessorController {
-    Connection conexao = new ConnectionFactory().getConnection();
 
-    private RepositorioProfessor repositorioProfessor;
-    private ProfessorService professorService;
+    private final RepositorioProfessor repositorioProfessor;
+    private final ProfessorService professorService;
 
     public ProfessorController() {
         Connection conexao = new ConnectionFactory().getConnection();
@@ -24,17 +26,29 @@ public class ProfessorController {
         this.professorService = new ProfessorService(repositorioProfessor);
     }
 
+    private Response.ResponseBuilder cors(Response.ResponseBuilder builder) {
+        return builder
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
+                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+    }
+
+    @OPTIONS
+    @Path("{any:.*}")
+    public Response preflight() {
+        return cors(Response.ok()).build();
+    }
+
     @POST
     public Response salvar(Professor professor) {
         try {
             professorService.adicionar(professor);
-            return Response.status(Response.Status.CREATED).entity(professor).build();
+            return cors(Response.status(Response.Status.CREATED).entity(professor)).build();
         } catch (RuntimeException e) {
             e.printStackTrace();
-            return Response
-                    .status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity(e.getMessage())
-                    .build();
+            return cors(
+                    Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage())
+            ).build();
         }
     }
 
@@ -44,9 +58,9 @@ public class ProfessorController {
         Professor professor = repositorioProfessor.buscarPorId(id);
 
         if (professor == null)
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return cors(Response.status(Response.Status.NOT_FOUND)).build();
 
-        return Response.status(Response.Status.OK).entity(professor).build();
+        return cors(Response.ok(professor)).build();
     }
 
     @GET
@@ -55,16 +69,17 @@ public class ProfessorController {
         Professor professor = repositorioProfessor.buscarPorEmail(email);
 
         if (professor == null)
-            return Response.status(Response.Status.NOT_FOUND).build();
+            return cors(Response.status(Response.Status.NOT_FOUND)).build();
 
-        return Response.status(Response.Status.OK).entity(professor).build();
+        return cors(Response.ok(professor)).build();
     }
 
     @GET
     public Response listarTodos() {
         ArrayList<Professor> professores = repositorioProfessor.listarTodos();
         Response.Status status = professores.isEmpty() ? Response.Status.NOT_FOUND : Response.Status.OK;
-        return Response.status(status).entity(professores).build();
+
+        return cors(Response.status(status).entity(professores)).build();
     }
 
     @PUT
@@ -73,12 +88,12 @@ public class ProfessorController {
         Professor professorExistente = repositorioProfessor.buscarPorId(id);
 
         if (professorExistente == null) {
-            return Response.status(Response.Status.NOT_FOUND)
-                    .entity("Professor não encontrado")
-                    .build();
+            return cors(
+                    Response.status(Response.Status.NOT_FOUND)
+                            .entity("Professor não encontrado")
+            ).build();
         }
 
-        // Atualiza os dados
         professorExistente.setNome_professor(professorAtualizado.getNome_professor());
         professorExistente.setEspecialidade_professor(professorAtualizado.getEspecialidade_professor());
         professorExistente.setEmail_professor(professorAtualizado.getEmail_professor());
@@ -86,9 +101,7 @@ public class ProfessorController {
 
         repositorioProfessor.atualizar(professorExistente);
 
-        return Response.status(Response.Status.OK)
-                .entity(professorExistente)
-                .build();
+        return cors(Response.ok(professorExistente)).build();
     }
 
     @DELETE
@@ -98,20 +111,19 @@ public class ProfessorController {
             boolean removido = professorService.excluir(id);
 
             if (!removido) {
-                return Response.status(Response.Status.NOT_FOUND)
-                        .entity("Professor não encontrado.")
-                        .build();
+                return cors(
+                        Response.status(Response.Status.NOT_FOUND)
+                                .entity("Professor não encontrado.")
+                ).build();
             }
 
-            return Response.noContent().build(); // 204
+            return cors(Response.noContent()).build();
         } catch (RuntimeException e) {
             e.printStackTrace();
-            return Response
-                    .status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity(e.getMessage())
-                    .build();
+            return cors(
+                    Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                            .entity(e.getMessage())
+            ).build();
         }
     }
-
 }
-

@@ -12,7 +12,7 @@ public interface RepositorioCurso {
 
     Curso buscarPorId(Long id);
 
-    ArrayList<Curso> buscarPorProfessor(Long idProfessor);
+    ArrayList<Curso> buscarPorProfessor(Long id_professor);
 
     void atualizar(Curso curso);
 

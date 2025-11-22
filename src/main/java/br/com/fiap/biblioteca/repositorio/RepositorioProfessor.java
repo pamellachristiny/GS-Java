@@ -7,7 +7,7 @@ public interface RepositorioProfessor {
 
     void salvar(Professor professor);
 
-    Professor buscarPorId(int idProfessor);
+    Professor buscarPorId(int id_professor);
 
     Professor buscarPorEmail(String email);
 

@@ -7,7 +7,7 @@ public interface RepositorioUsuario {
 
     void salvar(Usuario usuario);
 
-    Usuario buscarPorId(int idUsuario);
+    Usuario buscarPorId(int id_usuario);
 
     Usuario buscarPorEmail(String email);
 

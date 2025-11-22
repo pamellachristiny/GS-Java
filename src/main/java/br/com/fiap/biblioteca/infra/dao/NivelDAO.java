@@ -39,4 +39,17 @@ public class NivelDAO implements RepositorioNivel {
     public void excluir(int idNivel) {
         niveis.removeIf(n -> n.getId_nivel() == idNivel);
     }
+
+    @Override
+    public void atualizar(Nivel nivelAtualizado) {
+        for (int i = 0; i < niveis.size(); i++) {
+            Nivel nivel = niveis.get(i);
+
+            if (nivel.getId_nivel() == nivelAtualizado.getId_nivel()) {
+                return;
+            }
+        }
+    }
+
+
 }

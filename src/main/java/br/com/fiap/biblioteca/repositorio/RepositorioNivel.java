@@ -9,9 +9,11 @@ public interface RepositorioNivel {
 
     Nivel buscarPorId(int idNivel);
 
-    Nivel buscarPorNome(String nomeNivel);
+    Nivel buscarPorNome(String nome_nivel);
 
     ArrayList<Nivel> listarTodos();
+
+    void atualizar(Nivel nivel);
 
     void excluir(int idNivel);
 }

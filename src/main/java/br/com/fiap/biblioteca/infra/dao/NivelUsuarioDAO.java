@@ -187,4 +187,25 @@ public class NivelUsuarioDAO implements RepositorioNivelUsuario{
             throw new RuntimeException("Erro ao excluir nível do usuário", e);
         }
     }
+    @Override
+    public void atualizar(NivelUsuario nivelUsuario) {
+        try {
+            Connection conexao = new ConnectionFactory().getConnection();
+            String sql = "UPDATE TB_NIVEL_USUARIO SET data_hora_nivel = ? " +
+                    "WHERE id_usuario = ? AND id_nivel = ?";
+
+            PreparedStatement comando = conexao.prepareStatement(sql);
+            comando.setTimestamp(1, new Timestamp(nivelUsuario.getData_hora_nivel().getTime()));
+            comando.setInt(2, nivelUsuario.getId_usuario());
+            comando.setInt(3, nivelUsuario.getId_nivel());
+
+            comando.executeUpdate();
+            comando.close();
+            conexao.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao atualizar nível do usuário", e);
+        }
+    }
+
 }

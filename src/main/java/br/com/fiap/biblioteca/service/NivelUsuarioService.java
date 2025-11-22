@@ -2,7 +2,6 @@ package br.com.fiap.biblioteca.service;
 
 import br.com.fiap.biblioteca.dominio.NivelUsuario;
 import br.com.fiap.biblioteca.repositorio.RepositorioNivelUsuario;
-
 public class NivelUsuarioService {
 
     private RepositorioNivelUsuario repositorioNivelUsuario;
@@ -14,5 +13,8 @@ public class NivelUsuarioService {
     public void adicionar(NivelUsuario nivelUsuario) {
         repositorioNivelUsuario.salvar(nivelUsuario);
     }
-}
 
+    public void atualizar(NivelUsuario nivelUsuario) {
+        repositorioNivelUsuario.atualizar(nivelUsuario);
+    }
+}

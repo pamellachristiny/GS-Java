@@ -7,11 +7,13 @@ public interface RepositorioNivelUsuario {
 
     void salvar(NivelUsuario nivelUsuario);
 
-    NivelUsuario buscar(int idUsuario, int idNivel);
+    NivelUsuario buscar(int id_usuario, int id_nivel);
 
-    ArrayList<NivelUsuario> buscarPorUsuario(int idUsuario);
+    ArrayList<NivelUsuario> buscarPorUsuario(int id_usuario);
 
     ArrayList<NivelUsuario> listarTodos();
 
-    void excluir(int idUsuario, int idNivel);
+    void excluir(int id_usuario, int id_nivel);
+
+    void atualizar(NivelUsuario nivelUsuario);
 }

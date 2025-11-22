@@ -96,4 +96,27 @@ public class NivelUsuarioController {
         }
     }
 
+    @PUT
+    @Path("/usuario/{idUsuario}/nivel/{idNivel}")
+    public Response atualizar(
+            @PathParam("idUsuario") int idUsuario,
+            @PathParam("idNivel") int idNivel,
+            NivelUsuario novoNivel) {
+
+        NivelUsuario existente = repositorio.buscar(idUsuario, idNivel); // ✔ CORRETO
+
+        if (existente == null) {
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Registro não encontrado")
+                    .build();
+        }
+
+        existente.setData_hora_nivel(novoNivel.getData_hora_nivel());
+
+        service.atualizar(existente);
+
+        return Response.ok(existente).build();
+    }
+
+
 }

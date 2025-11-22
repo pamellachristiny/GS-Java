@@ -106,4 +106,28 @@ public class UsuarioController {
             ).build();
         }
     }
+
+    @DELETE
+    @Path("/{id}")
+    public Response excluir(@PathParam("id") int id) {
+        try {
+            boolean removido = usuarioService.excluir(id);
+
+            if (!removido) {
+                return cors(
+                        Response.status(Response.Status.NOT_FOUND)
+                                .entity("Usuário não encontrado.")
+                ).build();
+            }
+
+            return cors(Response.noContent()).build(); // 204 No Content
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            return cors(
+                    Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                            .entity(e.getMessage())
+            ).build();
+        }
+    }
+
 }

@@ -33,8 +33,16 @@ public class UsuarioService {
         return repositorioUsuarios.listarTodos();
     }
 
-    public void excluir(int id) {
+    public boolean excluir(int id) {
+        Usuario usuario = repositorioUsuarios.buscarPorId(id);
+
+        if (usuario == null) {
+            return false; // não existe
+        }
+
         repositorioUsuarios.excluir(id);
+        return true; // excluído com sucesso
     }
+
 }
 

@@ -23,6 +23,10 @@ public class NivelService {
         return repositorioNivel.buscarPorNome(nome);
     }
 
+    public void atualizar(Nivel nivel) {
+        repositorioNivel.atualizar(nivel);
+    }
+
     public void excluir(int id) {
         repositorioNivel.excluir(id);
     }
