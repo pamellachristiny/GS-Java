@@ -7,206 +7,176 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChallengeDAO implements RepositorioChallenge{
+public class ChallengeDAO implements RepositorioChallenge {
 
-    public ChallengeDAO() {
+    private Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(
+                "jdbc:oracle:thin:@oracle.fiap.com.br:1521:ORCL",
+                "usuario",
+                "senha"
+        );
     }
 
     @Override
     public void salvar(Challenge challenge) {
-        try {
-            Connection conexao = new ConnectionFactory().getConnection();
-            String sql = "INSERT INTO TB_CHALLENGE (id_challenge, id_usuario, id_curso, nome_challenge, descricao_challenge) " +
-                    "VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO CHALLENGE (ID_USUARIO, ID_CURSO, NOME_CHALLENGE, DESCRICAO_CHALLENGE) VALUES (?, ?, ?, ?)";
 
-            PreparedStatement comando = conexao.prepareStatement(sql);
-            comando.setLong(1, obterProximoIdChallenge());
-            comando.setLong(2, challenge.getId_usuario());
-            comando.setLong(3, challenge.getId_curso());
-            comando.setString(4, challenge.getNome_challenge());
-            comando.setString(5, challenge.getDescricao_challenge());
+        try (Connection con = getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
 
-            comando.executeUpdate();
-            comando.close();
-            conexao.close();
+            ps.setLong(1, challenge.getId_usuario());
+            ps.setLong(2, challenge.getId_curso());
+            ps.setString(3, challenge.getNome_challenge());
+            ps.setString(4, challenge.getDescricao_challenge());
 
+            ps.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao salvar challenge", e);
+            throw new RuntimeException(e);
         }
-    }
-
-    private Long obterProximoIdChallenge() {
-        Long id = null;
-        try {
-            Connection conexao = new ConnectionFactory().getConnection();
-            String sql = "SELECT SEQ_CHALLENGE_ID.NEXTVAL FROM DUAL";
-
-            PreparedStatement comando = conexao.prepareStatement(sql);
-            ResultSet rs = comando.executeQuery();
-
-            if (rs.next()) {
-                id = rs.getLong(1);
-            }
-
-            rs.close();
-            comando.close();
-            conexao.close();
-
-        } catch (SQLException e) {
-            throw new RuntimeException("Erro ao gerar ID de challenge", e);
-        }
-        return id;
     }
 
     @Override
-    public Challenge buscarPorId(Long idChallenge) {
-        Challenge challenge = null;
+    public Challenge buscarPorId(Long id) {
+        String sql = "SELECT * FROM CHALLENGE WHERE ID_CHALLENGE = ?";
 
-        try {
-            Connection conexao = new ConnectionFactory().getConnection();
-            String sql = "SELECT * FROM TB_CHALLENGE WHERE id_challenge = ?";
+        try (Connection con = getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
 
-            PreparedStatement comando = conexao.prepareStatement(sql);
-            comando.setLong(1, idChallenge);
-
-            ResultSet rs = comando.executeQuery();
+            ps.setLong(1, id);
+            ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                challenge = new Challenge(
-                        rs.getLong("id_challenge"),
-                        rs.getLong("id_usuario"),
-                        rs.getLong("id_curso"),
-                        rs.getString("nome_challenge"),
-                        rs.getString("descricao_challenge")
+                return new Challenge(
+                        rs.getLong("ID_CHALLENGE"),
+                        rs.getLong("ID_USUARIO"),
+                        rs.getLong("ID_CURSO"),
+                        rs.getString("NOME_CHALLENGE"),
+                        rs.getString("DESCRICAO_CHALLENGE")
                 );
             }
 
-            rs.close();
-            comando.close();
-            conexao.close();
-
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao buscar challenge por id", e);
+            throw new RuntimeException(e);
         }
 
-        return challenge;
+        return null;
     }
 
     @Override
     public List<Challenge> buscarPorUsuario(Long idUsuario) {
-        List<Challenge> challenges = new ArrayList<>();
+        String sql = "SELECT * FROM CHALLENGE WHERE ID_USUARIO = ?";
+        List<Challenge> lista = new ArrayList<>();
 
-        try {
-            Connection conexao = new ConnectionFactory().getConnection();
-            String sql = "SELECT * FROM TB_CHALLENGE WHERE id_usuario = ? ORDER BY id_challenge";
+        try (Connection con = getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
 
-            PreparedStatement comando = conexao.prepareStatement(sql);
-            comando.setLong(1, idUsuario);
-
-            ResultSet rs = comando.executeQuery();
+            ps.setLong(1, idUsuario);
+            ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                challenges.add(new Challenge(
-                        rs.getLong("id_challenge"),
-                        rs.getLong("id_usuario"),
-                        rs.getLong("id_curso"),
-                        rs.getString("nome_challenge"),
-                        rs.getString("descricao_challenge")
+                lista.add(new Challenge(
+                        rs.getLong("ID_CHALLENGE"),
+                        rs.getLong("ID_USUARIO"),
+                        rs.getLong("ID_CURSO"),
+                        rs.getString("NOME_CHALLENGE"),
+                        rs.getString("DESCRICAO_CHALLENGE")
                 ));
             }
 
-            rs.close();
-            comando.close();
-            conexao.close();
-
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao buscar challenges por usuário", e);
+            throw new RuntimeException(e);
         }
 
-        return challenges;
+        return lista;
     }
 
     @Override
     public List<Challenge> buscarPorCurso(Long idCurso) {
-        List<Challenge> challenges = new ArrayList<>();
+        String sql = "SELECT * FROM CHALLENGE WHERE ID_CURSO = ?";
+        List<Challenge> lista = new ArrayList<>();
 
-        try {
-            Connection conexao = new ConnectionFactory().getConnection();
-            String sql = "SELECT * FROM TB_CHALLENGE WHERE id_curso = ? ORDER BY id_challenge";
+        try (Connection con = getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
 
-            PreparedStatement comando = conexao.prepareStatement(sql);
-            comando.setLong(1, idCurso);
-
-            ResultSet rs = comando.executeQuery();
+            ps.setLong(1, idCurso);
+            ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                challenges.add(new Challenge(
-                        rs.getLong("id_challenge"),
-                        rs.getLong("id_usuario"),
-                        rs.getLong("id_curso"),
-                        rs.getString("nome_challenge"),
-                        rs.getString("descricao_challenge")
+                lista.add(new Challenge(
+                        rs.getLong("ID_CHALLENGE"),
+                        rs.getLong("ID_USUARIO"),
+                        rs.getLong("ID_CURSO"),
+                        rs.getString("NOME_CHALLENGE"),
+                        rs.getString("DESCRICAO_CHALLENGE")
                 ));
             }
 
-            rs.close();
-            comando.close();
-            conexao.close();
-
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao buscar challenges por curso", e);
+            throw new RuntimeException(e);
         }
 
-        return challenges;
+        return lista;
     }
 
     @Override
     public List<Challenge> listarTodos() {
-        List<Challenge> challenges = new ArrayList<>();
+        String sql = "SELECT * FROM CHALLENGE";
+        List<Challenge> lista = new ArrayList<>();
 
-        try {
-            Connection conexao = new ConnectionFactory().getConnection();
-            String sql = "SELECT * FROM TB_CHALLENGE ORDER BY id_challenge";
-
-            PreparedStatement comando = conexao.prepareStatement(sql);
-            ResultSet rs = comando.executeQuery();
+        try (Connection con = getConnection();
+             PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
-                challenges.add(new Challenge(
-                        rs.getLong("id_challenge"),
-                        rs.getLong("id_usuario"),
-                        rs.getLong("id_curso"),
-                        rs.getString("nome_challenge"),
-                        rs.getString("descricao_challenge")
+                lista.add(new Challenge(
+                        rs.getLong("ID_CHALLENGE"),
+                        rs.getLong("ID_USUARIO"),
+                        rs.getLong("ID_CURSO"),
+                        rs.getString("NOME_CHALLENGE"),
+                        rs.getString("DESCRICAO_CHALLENGE")
                 ));
             }
 
-            rs.close();
-            comando.close();
-            conexao.close();
-
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao listar challenges", e);
+            throw new RuntimeException(e);
         }
 
-        return challenges;
+        return lista;
     }
 
     @Override
-    public void excluir(Long idChallenge) {
-        try {
-            Connection conexao = new ConnectionFactory().getConnection();
-            String sql = "DELETE FROM TB_CHALLENGE WHERE id_challenge = ?";
+    public void atualizar(Challenge challenge) {
+        String sql = "UPDATE CHALLENGE SET ID_USUARIO = ?, ID_CURSO = ?, NOME_CHALLENGE = ?, DESCRICAO_CHALLENGE = ? WHERE ID_CHALLENGE = ?";
 
-            PreparedStatement comando = conexao.prepareStatement(sql);
-            comando.setLong(1, idChallenge);
+        try (Connection con = getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
 
-            comando.executeUpdate();
-            comando.close();
-            conexao.close();
+            ps.setLong(1, challenge.getId_usuario());
+            ps.setLong(2, challenge.getId_curso());
+            ps.setString(3, challenge.getNome_challenge());
+            ps.setString(4, challenge.getDescricao_challenge());
+            ps.setLong(5, challenge.getId_challenge());
+
+            ps.executeUpdate();
 
         } catch (SQLException e) {
-            throw new RuntimeException("Erro ao excluir challenge", e);
+            throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public void excluir(Long id) {
+        String sql = "DELETE FROM CHALLENGE WHERE ID_CHALLENGE = ?";
+
+        try (Connection con = getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setLong(1, id);
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
 }

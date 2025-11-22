@@ -7,7 +7,7 @@ public interface RepositorioChallenge {
 
     void salvar(Challenge challenge);
 
-    Challenge buscarPorId(Long idChallenge);
+    Challenge buscarPorId(Long id);
 
     List<Challenge> buscarPorUsuario(Long idUsuario);
 
@@ -15,6 +15,8 @@ public interface RepositorioChallenge {
 
     List<Challenge> listarTodos();
 
-    void excluir(Long idChallenge);
+    void atualizar(Challenge challenge);
+
+    void excluir(Long id);
 }
 

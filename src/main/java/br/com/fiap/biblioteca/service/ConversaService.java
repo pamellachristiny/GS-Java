@@ -31,5 +31,10 @@ public class ConversaService {
     public void excluir(String id) {
         repositorioConversas.excluir(id);
     }
+
+    public void atualizar(Conversa conversa) {
+        repositorioConversas.atualizar(conversa);
+    }
+
 }
 

@@ -14,4 +14,7 @@ public interface RepositorioConversa {
     List<Conversa> listarTodas();
 
     void excluir(String idConversa);
+
+    void atualizar(Conversa conversa);
+
 }
