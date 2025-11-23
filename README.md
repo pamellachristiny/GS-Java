@@ -18,7 +18,7 @@ Este projeto implementa controle de cursos, usuários, desafios, níveis e conve
 ---
 
 ## 🌐  Link do Repositório
-👉[Repositório no GitHub](https://github.com/pamellachristiny/GS-Java)
+[Repositório no GitHub](https://github.com/pamellachristiny/GS-Java)
 
 ---
 
@@ -29,11 +29,11 @@ Este projeto implementa controle de cursos, usuários, desafios, níveis e conve
 ---
 
 ## 🌐 Link do Video de apresentação do projeto
-
+👉 [https://youtu.be/05msVwnAnXo](https://youtu.be/05msVwnAnXo)
 ---
 
 ## 🌐 Link do pitch
-
+👉 [https://youtu.be/TayY6gN3Z5c](https://youtu.be/TayY6gN3Z5c)
 ---
 
 ## 📁 Estrutura do Projeto
@@ -46,95 +46,6 @@ src/main/java/br/com/fiap/biblioteca/
 ├── dao/             → Camada DAO
 └── service/bo/      → Regras de negócio (quando aplicável)
 ```
-
----
-
-# 📌 Endpoints da Aplicação
-
-Aqui está a **Tabela de Endpoints em Markdown**, pronta para colar diretamente no seu README — profissional, organizada e sem emojis.
-
----
-
-## **Tabela de Endpoints (API RESTful)**
-
-### **Usuários**
-
-| URI              | Método | Descrição                        | Status             |
-| ---------------- | ------ | -------------------------------- | ------------------ |
-| `/usuarios`      | GET    | Retorna a lista de usuários.     | 200, 500           |
-| `/usuarios/{id}` | GET    | Retorna um usuário específico.   | 200, 404, 500      |
-| `/usuarios`      | POST   | Cadastra um novo usuário.        | 201, 400, 500      |
-| `/usuarios/{id}` | PUT    | Atualiza os dados de um usuário. | 200, 400, 404, 500 |
-| `/usuarios/{id}` | DELETE | Remove um usuário.               | 204, 404, 500      |
-
----
-
-### **Categorias**
-
-| URI                | Método | Descrição                         | Status        |
-| ------------------ | ------ | --------------------------------- | ------------- |
-| `/categorias`      | GET    | Lista todas as categorias.        | 200, 500      |
-| `/categorias/{id}` | GET    | Retorna uma categoria específica. | 200, 404, 500 |
-| `/categorias`      | POST   | Cadastra uma nova categoria.      | 201, 400, 500 |
-
----
-
-### **Challenges**
-
-| URI                | Método | Descrição                      | Status             |
-| ------------------ | ------ | ------------------------------ | ------------------ |
-| `/challenges`      | GET    | Lista todos os desafios.       | 200, 500           |
-| `/challenges/{id}` | GET    | Retorna um desafio específico. | 200, 404, 500      |
-| `/challenges`      | POST   | Cadastra um novo desafio.      | 201, 400, 500      |
-| `/challenges/{id}` | PUT    | Atualiza um desafio existente. | 200, 400, 404, 500 |
-| `/challenges/{id}` | DELETE | Remove um desafio.             | 204, 404, 500      |
-
----
-
-### **Cursos**
-
-| URI            | Método | Descrição                    | Status        |
-| -------------- | ------ | ---------------------------- | ------------- |
-| `/cursos`      | GET    | Lista todos os cursos.       | 200, 500      |
-| `/cursos/{id}` | GET    | Retorna um curso específico. | 200, 404, 500 |
-| `/cursos`      | POST   | Cadastra um novo curso.      | 201, 400, 500 |
-
----
-
-### **Professores**
-
-| URI                 | Método | Descrição                        | Status        |
-| ------------------- | ------ | -------------------------------- | ------------- |
-| `/professores`      | GET    | Lista todos os professores.      | 200, 500      |
-| `/professores/{id}` | GET    | Retorna um professor específico. | 200, 404, 500 |
-
----
-
-### **Feedbacks**
-
-| URI               | Método | Descrição                       | Status        |
-| ----------------- | ------ | ------------------------------- | ------------- |
-| `/feedbacks`      | GET    | Lista todos os feedbacks.       | 200, 500      |
-| `/feedbacks/{id}` | GET    | Retorna um feedback específico. | 200, 404, 500 |
-| `/feedbacks`      | POST   | Envia um novo feedback.         | 201, 400, 500 |
-
----
-
-### **Recomendações**
-
-| URI                          | Método | Descrição                                         | Status        |
-| ---------------------------- | ------ | ------------------------------------------------- | ------------- |
-| `/recomendacoes/{idUsuario}` | GET    | Retorna recomendações personalizadas de desafios. | 200, 404, 500 |
-
----
-
-### **Simulação de Conversa (IA)**
-
-| URI                    | Método | Descrição                                                          | Status        |
-| ---------------------- | ------ | ------------------------------------------------------------------ | ------------- |
-| `/conversas/simulacao` | POST   | Simula uma conversa com a agente de IA (apenas para demonstração). | 200, 400, 500 |
-
----
 
 # 🏛 Arquitetura do Projeto
 
